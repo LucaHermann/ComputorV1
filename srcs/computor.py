@@ -86,6 +86,7 @@ def p_addMinus(p):
     '''
     expression : expression MINUS NUMBER MULTIPLY UNKW
     '''
+    p[3] = -p[3]
     degrees[int(p[5].split('^')[1])] += p[3]
     print('--degrees in addMinus-- :', degrees)
 
@@ -126,7 +127,13 @@ while True:
     if ('=' in s):
         first, second = s.split('=')
         parser.parse(first)
-        parser.parse(second)
+        degree_first = degrees
         degrees = [0, 0, 0]
+        parser.parse(second)
+        degree_second = degrees
+        a = degree_first[2] - degree_second[2]
+        b = degree_first[1] - degree_second[1]
+        c = degree_first[0] - degree_second[0]
+        print('a:', a, 'b:', b, 'c:', c)
     else:
         print("input got the wrong format please input other calculs")
