@@ -70,7 +70,6 @@ def p_findFactor(p):
     '''
     degrees[int(p[3].split('^')[1])] += p[1]
     p[0] = 0
-    print('--degrees in findFactor-- :', degrees)
 # si mon expression est multiplier par une inconnue je recupere linconnu et la classe dans degrees
 
 
@@ -79,7 +78,6 @@ def p_addPlus(p):
     expression : expression PLUS NUMBER MULTIPLY UNKW
     '''
     degrees[int(p[5].split('^')[1])] += p[3]
-    print('--degrees in addPlus-- :', degrees)
 
 
 def p_addMinus(p):
@@ -88,7 +86,6 @@ def p_addMinus(p):
     '''
     p[3] = -p[3]
     degrees[int(p[5].split('^')[1])] += p[3]
-    print('--degrees in addMinus-- :', degrees)
 
 
 def p_expression(p):
@@ -100,7 +97,6 @@ def p_expression(p):
               | NUMBER UNKW NUMBER
     '''
     p[0] = (p[1], p[2], p[3])
-    print('p_expression', p[1], p[2])
 
 
 def p_expression_number(p):
@@ -119,6 +115,27 @@ parser = yacc.yacc()
 # equivalence d'un main
 
 
+def c_calcTrinom(a, b, c):
+    delta = b**2-4*a*c
+    print("Delta =", delta)
+    if delta > 0:
+        x1 = ((-b + delta**0.5) / (2*a))
+        x2 = ((-b - delta**0.5) / (2*a))
+        print('positive discriminant:', 'x1:', x1, 'x2:', x2)
+    elif delta == 0:
+        x0 = -b/(2*a)
+        print('discriminant equals to 0', 'x0:', x0)
+    else:
+        print('negative discriminant there is no solution')
+
+
+def firstDegree(b, c):
+    if c == 0:
+        print('there is only one solution and the solution is x1 = 0')
+    else:
+        print('there is one solution and the solution is', float(-c/b))
+
+
 while True:
     try:
         s = input('')
@@ -134,6 +151,16 @@ while True:
         a = degree_first[2] - degree_second[2]
         b = degree_first[1] - degree_second[1]
         c = degree_first[0] - degree_second[0]
-        print('a:', a, 'b:', b, 'c:', c)
+    if (a == 0 and b == 0 and c != 0):
+        print("Ohhh don't you dare to fuck with me")
     else:
-        print("input got the wrong format please input other calculs")
+        print("Forme réduite : {} * X^2 + {} * X^1 + {} * X^0 = 0".format(a, b, c))
+    if a == 0 and b != 0:
+        print("Équation du premier degré")
+        firstDegree(b, c)
+    elif (a == 0 and b == 0 and c == 0):
+        print("Equation du degré 0")
+    else:
+        print("Équation du second degré")
+        c_calcTrinom(a, b, c)
+    degrees = [0, 0, 0]
