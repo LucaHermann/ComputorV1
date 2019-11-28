@@ -3,7 +3,6 @@ import ply.yacc as yacc
 import sys
 
 degrees = [0, 0, 0]
-error = 0
 
 tokens = (
     'NUMBER',
@@ -11,17 +10,13 @@ tokens = (
     'MINUS',
     'MULTIPLY',
     'DIVIDE',
-    'UNKW',
-    'LPAREN',
-    'RPAREN'
+    'UNKW'
 )
 
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_MULTIPLY = r'\*'
 t_DIVIDE = r'/'
-t_LPAREN = r'\('
-t_RPAREN = r'\)'
 
 t_ignore = r' '
 
@@ -48,6 +43,7 @@ def t_error(t):
 
 
 lexer = lex.lex(debug=1)
+
 
 precedence = (
     ('left', 'PLUS', 'MINUS'),
@@ -80,12 +76,11 @@ def p_addMinus(p):
 
 def p_expression(p):
     '''
-    expression : NUMBER MULTIPLY NUMBER
+      expression : NUMBER MULTIPLY NUMBER
               | NUMBER MINUS NUMBER
               | NUMBER PLUS NUMBER
               | NUMBER DIVIDE NUMBER
               | NUMBER UNKW NUMBER
-              | LPAREN expression RPAREN
     '''
     p[0] = (p[1], p[2], p[3])
 
@@ -133,7 +128,7 @@ while True:
     if not s:
         print("there is no equation please enter somethings..")
         break
-    if ('=' in s):
+    if '=' in s:
         first, second = s.split('=')
         parser.parse(first)
         degree_first = degrees
@@ -145,9 +140,6 @@ while True:
         c = degree_first[0] - degree_second[0]
     if (a == 0 and b == 0 and c != 0):
         print("Really bro there is no solutions")
-        break
-    if error == 1:
-        print('This equation in not solvable')
         break
     else:
         print("Forme réduite : {} * X^2 + {} * X^1 + {} * X^0 = 0".format(a, b, c))
