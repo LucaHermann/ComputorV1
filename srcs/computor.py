@@ -18,19 +18,19 @@ t_DIVIDE = r'/'
 t_ignore = r' '
 
 
-def t_UNKW(t):
-    r'X(\^?[0-9]?)'
-    if t.value == "X":
-        t.value = "X^1"
-    return t
-
-
 def t_NUMBER(t):
     r'-?\d*\.?\d+'
     if ("." in t.value):
         t.value = float(t.value)
     else:
         t.value = int(t.value)
+    return t
+
+
+def t_UNKW(t):
+    r'X(\^?[0-9]?)'
+    if t.value == "X":
+        t.value = "X^1"
     return t
 
 
