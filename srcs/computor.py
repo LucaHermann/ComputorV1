@@ -1,14 +1,10 @@
-import ply.lex as lex  # lexer
-import ply.yacc as yacc  # parser
+import ply.lex as lex
+import ply.yacc as yacc
 import sys
 
-# suivant la puissance de l'inconnu (1er, 2eme ou pas de puissance(0))
-# l'inconnu est rangée dans degrees a lindex correspondant
 degrees = [0, 0, 0]
+error = 0
 
-# def c_store(p):
-
-# Liste des noms de tokens.
 tokens = (
     'NUMBER',
     'PLUS',
@@ -17,10 +13,9 @@ tokens = (
     'DIVIDE',
     'UNKW',
     'LPAREN',
-    'RPAREN',
+    'RPAREN'
 )
 
-# definitions des regles regexpr pour les tokens
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_MULTIPLY = r'\*'
@@ -36,7 +31,6 @@ def t_UNKW(t):
     if t.value == "X":
         t.value = "X^1"
     return t
-# si dans l'expression je trouve une inconnue
 
 
 def t_NUMBER(t):
@@ -49,15 +43,12 @@ def t_NUMBER(t):
 
 
 def t_error(t):
-    print("something went wrong in lexer")
+    print("something went wrong in lexer[{}]".format(t))
     t.lexer.skip(1)
-# si dans l'expression je trouve une erreur
 
 
-lexer = lex.lex()
-# creation du lexer
+lexer = lex.lex(debug=1)
 
-# definition de regles de calculs primaires
 precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'MULTIPLY', 'DIVIDE')
@@ -70,7 +61,6 @@ def p_findFactor(p):
     '''
     degrees[int(p[3].split('^')[1])] += p[1]
     p[0] = 0
-# si mon expression est multiplier par une inconnue je recupere linconnu et la classe dans degrees
 
 
 def p_addPlus(p):
@@ -95,6 +85,7 @@ def p_expression(p):
               | NUMBER PLUS NUMBER
               | NUMBER DIVIDE NUMBER
               | NUMBER UNKW NUMBER
+              | LPAREN expression RPAREN
     '''
     p[0] = (p[1], p[2], p[3])
 
@@ -108,38 +99,39 @@ def p_expression_number(p):
 
 def p_error(p):
     print("something went wrong in parser [{}]".format(p))
-    p.parser.skip(1)
 
 
 parser = yacc.yacc()
-# equivalence d'un main
 
 
 def c_calcTrinom(a, b, c):
     delta = b**2-4*a*c
-    print("Delta =", delta)
+    print("Delta = {}".format(delta))
     if delta > 0:
         x1 = ((-b + delta**0.5) / (2*a))
         x2 = ((-b - delta**0.5) / (2*a))
-        print('positive discriminant:', 'x1:', x1, 'x2:', x2)
+        print("positive discriminant: x1: {} x2: {}".format(x1, x2))
     elif delta == 0:
         x0 = -b/(2*a)
-        print('discriminant equals to 0', 'x0:', x0)
+        print("discriminant equals to 0 x0: {}".format(x0))
     else:
-        print('negative discriminant there is no solution')
+        print("negative discriminant there is no solution")
 
 
-def firstDegree(b, c):
+def c_firstDegree(b, c):
     if c == 0:
-        print('there is only one solution and the solution is x1 = 0')
+        print("there is only one solution and the solution is x1 = 0")
     else:
-        print('there is one solution and the solution is', float(-c/b))
+        print("there is one solution and the solution is", float(-c/b))
 
 
 while True:
     try:
         s = input('')
     except EOFError:
+        break
+    if not s:
+        print("there is no equation please enter somethings..")
         break
     if ('=' in s):
         first, second = s.split('=')
@@ -152,12 +144,16 @@ while True:
         b = degree_first[1] - degree_second[1]
         c = degree_first[0] - degree_second[0]
     if (a == 0 and b == 0 and c != 0):
-        print("Ohhh don't you dare to fuck with me")
+        print("Really bro there is no solutions")
+        break
+    if error == 1:
+        print('This equation in not solvable')
+        break
     else:
         print("Forme réduite : {} * X^2 + {} * X^1 + {} * X^0 = 0".format(a, b, c))
     if a == 0 and b != 0:
         print("Équation du premier degré")
-        firstDegree(b, c)
+        c_firstDegree(b, c)
     elif (a == 0 and b == 0 and c == 0):
         print("Equation du degré 0")
     else:
