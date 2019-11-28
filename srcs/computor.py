@@ -1,3 +1,4 @@
+import logging
 import ply.lex as lex
 import ply.yacc as yacc
 import sys
@@ -39,7 +40,8 @@ def t_error(t):
     t.lexer.skip(1)
 
 
-lexer = lex.lex(debug=1)
+lexer = lex.lex()
+
 
 degrees = [0, 0, 0]
 precedence = (
@@ -93,7 +95,7 @@ def p_error(p):
     print("something went wrong in parser [{}]".format(p))
 
 
-parser = yacc.yacc()
+parser = yacc.yacc(errorlog=yacc.NullLogger())
 
 
 def c_calcTrinom(a, b, c):
