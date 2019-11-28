@@ -2,8 +2,6 @@ import ply.lex as lex
 import ply.yacc as yacc
 import sys
 
-degrees = [0, 0, 0]
-
 tokens = (
     'NUMBER',
     'PLUS',
@@ -17,7 +15,6 @@ t_PLUS = r'\+'
 t_MINUS = r'-'
 t_MULTIPLY = r'\*'
 t_DIVIDE = r'/'
-
 t_ignore = r' '
 
 
@@ -44,7 +41,7 @@ def t_error(t):
 
 lexer = lex.lex(debug=1)
 
-
+degrees = [0, 0, 0]
 precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'MULTIPLY', 'DIVIDE')
