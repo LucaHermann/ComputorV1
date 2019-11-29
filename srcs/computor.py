@@ -114,6 +114,8 @@ while True:
     if not s:
         print("there is no equation please enter somethings..")
         break
+    if 'q' in s:
+        exit(0)
     if '=' in s:
         first, second = s.split('=')
         parser.parse(first)
@@ -137,4 +139,5 @@ while True:
     else:
         print("2nd degree :")
         c_calcTrinom(a, b, c)
+
     degrees = [0, 0, 0]
