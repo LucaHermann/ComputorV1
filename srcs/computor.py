@@ -40,10 +40,12 @@ def t_error(t):
     t.lexer.skip(1)
 
 
-lexer = lex.lex()
+lexer = lex.lex(debug=1)
 
 
 degrees = [0, 0, 0]
+
+
 precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'MULTIPLY', 'DIVIDE')
@@ -60,14 +62,14 @@ def p_findFactor(p):
 
 def p_addPlus(p):
     '''
-    expression : expression PLUS NUMBER MULTIPLY UNKW
+    expression : expression PLUS NUMBER MULTIPLY UNKW %prec MULTIPLY
     '''
     degrees[int(p[5].split('^')[1])] += p[3]
 
 
 def p_addMinus(p):
     '''
-    expression : expression MINUS NUMBER MULTIPLY UNKW
+    expression : expression MINUS NUMBER MULTIPLY UNKW %prec MULTIPLY
     '''
     p[3] = -p[3]
     degrees[int(p[5].split('^')[1])] += p[3]
@@ -81,6 +83,7 @@ def p_expression(p):
               | NUMBER DIVIDE NUMBER
               | NUMBER UNKW NUMBER
     '''
+
     p[0] = (p[1], p[2], p[3])
 
 
@@ -95,7 +98,7 @@ def p_error(p):
     print("something went wrong in parser [{}]".format(p))
 
 
-parser = yacc.yacc(errorlog=yacc.NullLogger())
+parser = yacc.yacc(debug=1)
 
 
 def c_calcTrinom(a, b, c):
@@ -138,16 +141,16 @@ while True:
         b = degree_first[1] - degree_second[1]
         c = degree_first[0] - degree_second[0]
     if (a == 0 and b == 0 and c != 0):
-        print("Really bro there is no solutions")
+        print("Really... there is no solutions...")
         break
     else:
-        print("Forme réduite : {} * X^2 + {} * X^1 + {} * X^0 = 0".format(a, b, c))
+        print("reduce form : {} * X^2 + {} * X^1 + {} * X^0 = 0".format(a, b, c))
     if a == 0 and b != 0:
-        print("Équation du premier degré")
+        print("1st degree :")
         c_firstDegree(b, c)
     elif (a == 0 and b == 0 and c == 0):
-        print("Equation du degré 0")
+        print("degree 0")
     else:
-        print("Équation du second degré")
+        print("2nd degree :")
         c_calcTrinom(a, b, c)
     degrees = [0, 0, 0]
