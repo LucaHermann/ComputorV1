@@ -138,5 +138,4 @@ while True:
     else:
         print("2nd degree")
         c_calcTrinom(a, b, c)
-
     degrees = [0, 0, 0]
