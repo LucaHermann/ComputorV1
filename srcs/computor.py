@@ -117,8 +117,6 @@ while True:
         break
     if 'q' in s:
         exit(0)
-    if error == 1:
-        exit(0)
     if '=' in s:
         first, second = s.split('=')
         parser.parse(first)
@@ -129,6 +127,9 @@ while True:
         a = degree_first[2] - degree_second[2]
         b = degree_first[1] - degree_second[1]
         c = degree_first[0] - degree_second[0]
+    if error == 0:
+        print('wrong format program exit now')
+        exit(0)
     if (a == 0 and b == 0 and c != 0):
         print("Really... there is no solutions...")
         break
