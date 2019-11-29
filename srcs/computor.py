@@ -39,7 +39,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-
+error = 0
 degrees = [0, 0, 0]
 precedence = (
     ('left', 'PLUS', 'MINUS'),
@@ -79,6 +79,8 @@ def p_expression_number(p):
 
 def p_error(p):
     print("something went wrong in parser [{}]".format(p))
+    error = 1
+    return error
 
 
 parser = yacc.yacc()
@@ -114,6 +116,8 @@ while True:
         print("there is no equation please enter somethings..")
         break
     if 'q' in s:
+        exit(0)
+    if error == 1:
         exit(0)
     if '=' in s:
         first, second = s.split('=')
