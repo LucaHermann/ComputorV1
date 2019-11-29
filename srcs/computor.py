@@ -8,14 +8,12 @@ tokens = (
     'PLUS',
     'MINUS',
     'MULTIPLY',
-    'DIVIDE',
     'UNKW'
 )
 
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_MULTIPLY = r'\*'
-t_DIVIDE = r'/'
 t_ignore = r' '
 
 
@@ -40,15 +38,13 @@ def t_error(t):
     t.lexer.skip(1)
 
 
-lexer = lex.lex(debug=1)
+lexer = lex.lex()
 
 
 degrees = [0, 0, 0]
-
-
 precedence = (
     ('left', 'PLUS', 'MINUS'),
-    ('left', 'MULTIPLY', 'DIVIDE')
+    ('left', 'MULTIPLY')
 )
 
 
@@ -75,18 +71,6 @@ def p_addMinus(p):
     degrees[int(p[5].split('^')[1])] += p[3]
 
 
-def p_expression(p):
-    '''
-      expression : NUMBER MULTIPLY NUMBER
-              | NUMBER MINUS NUMBER
-              | NUMBER PLUS NUMBER
-              | NUMBER DIVIDE NUMBER
-              | NUMBER UNKW NUMBER
-    '''
-
-    p[0] = (p[1], p[2], p[3])
-
-
 def p_expression_number(p):
     '''
     expression : NUMBER
@@ -98,7 +82,7 @@ def p_error(p):
     print("something went wrong in parser [{}]".format(p))
 
 
-parser = yacc.yacc(debug=1)
+parser = yacc.yacc()
 
 
 def c_calcTrinom(a, b, c):
