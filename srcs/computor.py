@@ -9,7 +9,6 @@ tokens = (
     'MULTIPLY',
     'UNKW'
 )
-
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_MULTIPLY = r'\*'
@@ -38,7 +37,6 @@ def t_error(t):
 
 
 lexer = lex.lex()
-
 error = 0
 degrees = [0, 0, 0]
 precedence = (
