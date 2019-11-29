@@ -1,4 +1,3 @@
-import logging
 import ply.lex as lex
 import ply.yacc as yacc
 import sys
@@ -87,7 +86,7 @@ parser = yacc.yacc()
 
 def c_calcTrinom(a, b, c):
     delta = b**2-4*a*c
-    print("Delta = {}".format(delta))
+    print("Delta : {}".format(delta))
     if delta > 0:
         x1 = ((-b + delta**0.5) / (2*a))
         x2 = ((-b - delta**0.5) / (2*a))
@@ -132,12 +131,12 @@ while True:
     else:
         print("reduce form : {} * X^2 + {} * X^1 + {} * X^0 = 0".format(a, b, c))
     if a == 0 and b != 0:
-        print("1st degree :")
+        print("1st degree")
         c_firstDegree(b, c)
     elif (a == 0 and b == 0 and c == 0):
         print("degree 0")
     else:
-        print("2nd degree :")
+        print("2nd degree")
         c_calcTrinom(a, b, c)
 
     degrees = [0, 0, 0]
