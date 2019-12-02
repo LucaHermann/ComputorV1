@@ -115,6 +115,9 @@ while True:
         break
     if 'q' in s:
         exit(0)
+    if 'X^3' in s:
+        print('X^3 not supproted by ComputorV1 program exit now')
+        exit(0)
     if '=' in s:
         first, second = s.split('=')
         parser.parse(first)
