@@ -25,7 +25,7 @@ def t_NUMBER(t):
 
 
 def t_UNKW(t):
-    r'X(\^?[0-9]?)'
+    r'X(\^?[0-2]?)'
     if t.value == "X":
         t.value = "X^1"
     return t
