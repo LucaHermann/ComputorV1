@@ -85,6 +85,7 @@ parser = yacc.yacc()
 
 
 def c_calcTrinom(a, b, c):
+    arr = [0]
     delta = b**2-4*a*c
     print("Delta : {}".format(delta))
     if delta > 0:
@@ -95,7 +96,15 @@ def c_calcTrinom(a, b, c):
         x0 = -b/(2*a)
         print("discriminant equals to 0 x0: {}".format(x0))
     else:
-        print("negative discriminant there is no solution")
+        print("negative discriminant complex solution:")
+        delta = -delta
+        arr[0] = (delta**0.5) / 2
+        z1 = -b / 2
+        z1 = str(z1) + "-" + "{}i".format(arr[0])
+        arr[0] = (delta**0.5) / 2
+        z2 = -b / 2
+        z2 = str(z2) + "+" + "{}i".format(arr[0])
+        print("z1 = {} and z2 = {}".format(z1, z2))
 
 
 def c_firstDegree(b, c):
@@ -129,7 +138,7 @@ while True:
         b = degree_first[1] - degree_second[1]
         c = degree_first[0] - degree_second[0]
     if error == 1:
-        print("wrong format program exit now")
+        print("wrong format for the equation program exit now")
         exit(0)
     if (a == 0 and b == 0 and c != 0):
         print("Really... there is no solutions...")
