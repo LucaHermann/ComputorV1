@@ -116,7 +116,7 @@ while True:
     if 'q' in s:
         exit(0)
     if 'X^3' in s:
-        print('X^3 not supproted by ComputorV1 program exit now')
+        print("X^3 not supproted by ComputorV1 program exit now")
         exit(0)
     if '=' in s:
         first, second = s.split('=')
@@ -128,8 +128,8 @@ while True:
         a = degree_first[2] - degree_second[2]
         b = degree_first[1] - degree_second[1]
         c = degree_first[0] - degree_second[0]
-    if error == 0:
-        print('wrong format program exit now')
+    if error == 1:
+        print("wrong format program exit now")
         exit(0)
     if (a == 0 and b == 0 and c != 0):
         print("Really... there is no solutions...")
