@@ -98,12 +98,11 @@ def c_calcTrinom(a, b, c):
     else:
         print("negative discriminant complex solution:")
         delta = -delta
-        deltaArrComplex[0] = (delta**0.5) / 2
+        deltaArrComplex[0] = (delta**0.5) / (2*a)
         print(deltaArrComplex[0])
-        z1 = -b / 2
+        z1 = -b / (2*a)
         z1 = str(z1) + " - " + "{}i".format(deltaArrComplex[0])
-        deltaArrComplex[0] = (delta**0.5) / 2
-        z2 = -b / 2
+        z2 = -b / (2*a)
         z2 = str(z2) + " + " + "{}i".format(deltaArrComplex[0])
         print("z1 = {} and z2 = {}".format(z1, z2))
 
