@@ -125,8 +125,9 @@ while True:
     if 'q' in s:
         exit(0)
     if 'X^3' in s:
-        print("X^3 not supproted by ComputorV1 program exit now")
-        exit(0)
+        print("Polynomial degree: 3")
+        print("X^3 not supproted by ComputorV1 program will exit now")
+        break
     if '=' in s:
         first, second = s.split('=')
         parser.parse(first)
@@ -146,11 +147,11 @@ while True:
     else:
         print("reduce form : {} * X^2 + {} * X^1 + {} * X^0 = 0".format(a, b, c))
     if a == 0 and b != 0:
-        print("1st degree")
+        print("Polynomial degree: 1")
         c_firstDegree(b, c)
     elif (a == 0 and b == 0 and c == 0):
         print("degree 0")
     else:
-        print("2nd degree")
+        print("Polynomial degree: 2")
         c_calcTrinom(a, b, c)
     degrees = [0, 0, 0]
